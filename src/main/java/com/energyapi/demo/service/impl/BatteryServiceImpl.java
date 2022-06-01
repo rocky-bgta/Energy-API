@@ -44,10 +44,11 @@ public class BatteryServiceImpl implements BatteryService {
         ResponseObject responseObject;
         Map<String,Object> result = new HashMap<>();
         double total,average;
+        List<BatteryModel> batteryModels;
 
-        List<BatteryEntity> batteryList = batteryRepository.findByPostCodeRange(start,end);
+        List<BatteryEntity> batteryEntities = batteryRepository.findByPostCodeRange(start,end);
 
-        List<BatteryEntity> sortedBatteryListByName = batteryList.stream()
+        List<BatteryEntity> sortedBatteryListByName = batteryEntities.stream()
                 .sorted(Comparator.comparing(n->n.getName().toLowerCase()))
                 .collect(Collectors.toList());
 
@@ -58,8 +59,9 @@ public class BatteryServiceImpl implements BatteryService {
 
         total = doubleSummaryStatistics.getSum();
         average = doubleSummaryStatistics.getAverage();
+        batteryModels = Arrays.asList(modelMapper.map(batteryEntities, BatteryModel[].class));
 
-        result.put("Returned battery list",batteryList);
+        result.put("Returned battery list",batteryModels);
         result.put("Total watt capacity",decimalFormat.format(total));
         result.put("Average watt capacity",decimalFormat.format(average));
 

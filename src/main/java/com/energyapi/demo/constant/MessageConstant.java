@@ -11,6 +11,6 @@ package com.energyapi.demo.constant;
 
 public class MessageConstant {
 	public static final String SUCCESSFULLY_BATTERY_LIST_CREATED = "Battery list created successfully";
-	public static final String SUCCESSFULLY_GET_ALL_BATTERY= "Successfully get All Batteries";
+	public static final String SUCCESSFULLY_GET_ALL_BATTERY= "Successfully get all returned batteries";
 
 }
