@@ -7,8 +7,9 @@
  * (C) CopyRight Salahin ltd.
  */
 
-package com.example.demo.entities;
+package com.energyapi.demo.entities;
 
+import com.energyapi.demo.core.BaseEntity;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "battery")
-public class Battery {
+public class BatteryEntity extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(generator = "uuid2")
