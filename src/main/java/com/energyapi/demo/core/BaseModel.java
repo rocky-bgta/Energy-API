@@ -16,13 +16,7 @@ import java.util.Date;
 
 @Data
 public abstract class BaseModel {
-	
-	@JsonIgnore
-	private String createdBy;
-	
-	@JsonIgnore
-	private String updatedBy;
-	
+
 	@JsonIgnore
 	private Date createdDate;
 	

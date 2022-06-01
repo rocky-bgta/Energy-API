@@ -26,7 +26,10 @@ public class BatteryEntity extends BaseEntity {
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	@Column(name = "id", nullable = false)
 	private UUID id;
-	
+
+	@Column(name = "name")
+	private String name;
+
 	@Column(name="postcode")
 	private Integer postcode;
 	

@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BatteryServiceImpl implements BatteryService {
@@ -27,7 +29,7 @@ public class BatteryServiceImpl implements BatteryService {
 
 
     @Override
-    public ResponseObject createBattery(List<BatteryModel> batteryModels) {
+    public ResponseObject createBatteries(List<BatteryModel> batteryModels) {
         ResponseObject responseObject;
         List<BatteryEntity> batteryEntities = Arrays.asList(modelMapper.map(batteryModels, BatteryEntity[].class));
         batteryEntities = batteryRepository.saveAll(batteryEntities);
@@ -40,7 +42,18 @@ public class BatteryServiceImpl implements BatteryService {
     }
 
     @Override
-    public ResponseObject getAllBatteries() {
-        return null;
+    public ResponseObject getBatteriesByPostCodeRange(Integer start, Integer end) {
+        ResponseObject responseObject;
+        List<BatteryEntity> batteryList = batteryRepository.findByPostCodeRange(start,end);
+
+        List<BatteryEntity> sortedBatteryListByName = batteryList.stream()
+                .sorted(Comparator.comparing(n->n.getName().toLowerCase()))
+                .collect(Collectors.toList());
+
+
+        responseObject = UtilityMethods.buildResponseObject(sortedBatteryListByName,
+                MessageConstant.SUCCESSFULLY_GET_ALL_BATTERY,
+                HttpStatus.OK);
+        return responseObject;
     }
 }

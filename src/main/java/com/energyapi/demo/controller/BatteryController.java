@@ -36,17 +36,16 @@ public class BatteryController {
 	@PostMapping("create")
     public ResponseEntity createBattery(@RequestBody List<BatteryModel> batteryModels){
         ResponseObject responseObject;
-		System.out.println(batteryModels);
-		responseObject = this.batteryService.createBattery(batteryModels);
+		responseObject = this.batteryService.createBatteries(batteryModels);
 		return new ResponseEntity(responseObject,HttpStatus.CREATED);
 
     }
 	
 
-	@GetMapping("list")
-	public ResponseEntity<ResponseObject> getAllBatteries(){
+	@GetMapping("list/{start}/{end}")
+	public ResponseEntity<ResponseObject> getAllBatteries(@PathVariable Integer start, @PathVariable Integer end){
 		ResponseObject responseObject;
-		responseObject = this.batteryService.getAllBatteries();
+		responseObject = this.batteryService.getBatteriesByPostCodeRange(start,end);
 		return new ResponseEntity(responseObject,HttpStatus.OK);
 	}
 

@@ -6,6 +6,6 @@ import com.energyapi.demo.model.BatteryModel;
 import java.util.List;
 
 public interface BatteryService {
-	ResponseObject createBattery(List<BatteryModel> batteryModel);
-	ResponseObject getAllBatteries();
+	ResponseObject createBatteries(List<BatteryModel> batteryModel);
+	ResponseObject getBatteriesByPostCodeRange(Integer start, Integer end);
 }

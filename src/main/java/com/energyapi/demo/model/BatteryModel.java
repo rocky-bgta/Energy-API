@@ -9,6 +9,7 @@ import java.util.UUID;
 public class BatteryModel extends BaseModel {
 
     private UUID id;
+    private String name;
     private Integer postcode;
     private Integer watt;
 }
