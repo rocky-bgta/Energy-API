@@ -19,11 +19,9 @@ public class ResponseObject implements Serializable {
 	
 	@JsonIgnore
 	private static final long serialVersionUID = 1L;
-	
     private Object data;
 	private Integer httpStatusCode;
 	private String message;
-	
 	public ResponseObject(Object data, Integer httpStatusCode, String message) {
 		this.data = data;
 		this.httpStatusCode = httpStatusCode;
