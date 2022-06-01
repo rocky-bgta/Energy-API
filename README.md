@@ -4,7 +4,8 @@
 &#8594; OS must have installed java 8 or higher <br />
 
 ## Framework use to complete this task:
-* Spring-boot to develop back end
+* Spring-boot to develop back end.
+* In memory h2 db used as database.
 
 ##To run this project follow the below instructions:
 1. Now execute the following command: <br />

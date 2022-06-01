@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @Service
 public class BatteryServiceImpl implements BatteryService {
     private static final ModelMapper modelMapper = new ModelMapper();
-
     private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private final BatteryRepository batteryRepository;
 

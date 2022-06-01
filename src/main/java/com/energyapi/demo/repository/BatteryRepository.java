@@ -20,8 +20,6 @@ import java.util.UUID;
 
 @Repository
 public interface BatteryRepository extends JpaRepository<BatteryEntity, UUID> {
-	List<BatteryEntity> findAll();
 	@Query("select e from BatteryEntity e where e.postcode between :start and :end")
 	List<BatteryEntity> findByPostCodeRange(@Param("start") Integer start, @Param("end") Integer end);
-
 }
