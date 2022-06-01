@@ -11,22 +11,20 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class BatteryServiceImpl implements BatteryService {
-
     private static final ModelMapper modelMapper = new ModelMapper();
 
+    private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private final BatteryRepository batteryRepository;
 
     public BatteryServiceImpl(BatteryRepository batteryRepository) {
         this.batteryRepository = batteryRepository;
     }
-
 
     @Override
     public ResponseObject createBatteries(List<BatteryModel> batteryModels) {
@@ -44,14 +42,28 @@ public class BatteryServiceImpl implements BatteryService {
     @Override
     public ResponseObject getBatteriesByPostCodeRange(Integer start, Integer end) {
         ResponseObject responseObject;
+        Map<String,Object> result = new HashMap<>();
+        double total,average;
+
         List<BatteryEntity> batteryList = batteryRepository.findByPostCodeRange(start,end);
 
         List<BatteryEntity> sortedBatteryListByName = batteryList.stream()
                 .sorted(Comparator.comparing(n->n.getName().toLowerCase()))
                 .collect(Collectors.toList());
 
+        DoubleSummaryStatistics doubleSummaryStatistics = sortedBatteryListByName.stream()
+                .mapToDouble(BatteryEntity::getWatt)
+                .summaryStatistics();
 
-        responseObject = UtilityMethods.buildResponseObject(sortedBatteryListByName,
+
+        total = doubleSummaryStatistics.getSum();
+        average = doubleSummaryStatistics.getAverage();
+
+        result.put("Returned battery list",batteryList);
+        result.put("Total watt capacity",decimalFormat.format(total));
+        result.put("Average watt capacity",decimalFormat.format(average));
+
+        responseObject = UtilityMethods.buildResponseObject(result,
                 MessageConstant.SUCCESSFULLY_GET_ALL_BATTERY,
                 HttpStatus.OK);
         return responseObject;
